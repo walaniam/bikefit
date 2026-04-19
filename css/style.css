@@ -1,0 +1,162 @@
+/* style.css — Custom styles for Bike Fit SPA */
+
+/* Overall layout */
+h1 {
+  margin-bottom: 0.1em;
+}
+
+.subtitle {
+  color: var(--muted-color);
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+
+/* Two-column layout: SVG left, form right */
+.app-layout {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 900px) {
+  .app-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* SVG container */
+.viz-panel {
+  position: sticky;
+  top: 1rem;
+}
+
+.bike-svg {
+  width: 100%;
+  height: auto;
+  min-height: 350px;
+  max-height: 70vh;
+  background: #fafafa;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+/* Form panel */
+.form-panel details {
+  margin-bottom: 1rem;
+}
+
+.form-panel summary {
+  cursor: pointer;
+  padding: 0.4rem 0;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem 1rem;
+}
+
+@media (max-width: 600px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-grid label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+  margin-bottom: 0;
+}
+
+.form-grid label span {
+  margin-bottom: 0.15rem;
+  font-weight: 500;
+}
+
+.form-grid label small {
+  color: var(--muted-color);
+  font-weight: 400;
+}
+
+.form-grid input[type='number'] {
+  padding: 0.35rem 0.5rem;
+  font-size: 0.9rem;
+  margin-bottom: 0;
+  height: 2.2rem;
+}
+
+/* Reset button */
+.reset-btn {
+  margin-top: 1rem;
+  width: 100%;
+}
+
+/* Fit comparison table */
+.fit-table-section {
+  margin-top: 0.5rem;
+}
+
+.fit-table-section h3 {
+  margin-bottom: 0.25rem;
+}
+
+.table-note {
+  color: var(--muted-color);
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+}
+
+.fit-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.fit-table th,
+.fit-table td {
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.fit-table thead th {
+  border-bottom: 2px solid var(--muted-border-color);
+  font-weight: 600;
+}
+
+.fit-table tbody tr {
+  border-bottom: 1px solid var(--muted-border-color);
+}
+
+/* Status indicators */
+.status-badge {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.status-good {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-warn {
+  background: #fff3e0;
+  color: #ef6c00;
+}
+
+.status-bad {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.status-info {
+  background: #e3f2fd;
+  color: #1565c0;
+}

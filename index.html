@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bike Fit — MTB Geometry Visualizer</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>🚵 Bike Fit</h1>
+      <p class="subtitle">Mountain bike geometry visualizer &amp; fit calculator</p>
+
+      <div class="app-layout">
+        <!-- SVG Visualization -->
+        <div class="viz-panel">
+          <svg id="bikeSvg" class="bike-svg"></svg>
+        </div>
+
+        <!-- Input Form -->
+        <div class="form-panel">
+          <!-- Bike Geometry -->
+          <details open>
+            <summary><strong>Bike Geometry</strong></summary>
+            <div class="form-grid">
+              <label>
+                <span>Head Tube Length <small>(mm)</small></span>
+                <input type="number" id="headTubeLength" step="1" min="80" max="200" />
+              </label>
+              <label>
+                <span>Head Tube Angle <small>(°)</small></span>
+                <input type="number" id="headTubeAngle" step="0.1" min="60" max="75" />
+              </label>
+              <label>
+                <span>Seat Tube Length <small>(mm)</small></span>
+                <input type="number" id="seatTubeLength" step="1" min="350" max="600" />
+              </label>
+              <label>
+                <span>Seat Tube Angle <small>(°)</small></span>
+                <input type="number" id="seatTubeAngle" step="0.1" min="68" max="80" />
+              </label>
+              <label>
+                <span>Top Tube Effective <small>(mm)</small></span>
+                <input type="number" id="topTubeEffective" step="1" min="500" max="700" />
+              </label>
+              <label>
+                <span>Reach <small>(mm)</small></span>
+                <input type="number" id="reach" step="1" min="400" max="550" />
+              </label>
+              <label>
+                <span>Wheelbase <small>(mm)</small></span>
+                <input type="number" id="wheelbase" step="1" min="1100" max="1400" />
+              </label>
+              <label>
+                <span>Chainstay <small>(mm)</small></span>
+                <input type="number" id="chainstay" step="1" min="400" max="500" />
+              </label>
+              <label>
+                <span>Stack <small>(mm)</small></span>
+                <input type="number" id="stack" step="1" min="550" max="700" />
+              </label>
+              <label>
+                <span>BB Drop <small>(mm)</small></span>
+                <input type="number" id="bbDrop" step="1" min="10" max="60" />
+              </label>
+              <label>
+                <span>Stem Length <small>(mm)</small></span>
+                <input type="number" id="stemLength" step="5" min="30" max="100" />
+              </label>
+              <label>
+                <span>Stem Angle <small>(°)</small></span>
+                <input type="number" id="stemAngle" step="1" min="-10" max="10" />
+              </label>
+            </div>
+          </details>
+
+          <!-- Rider Body -->
+          <details open>
+            <summary><strong>Rider Body</strong></summary>
+            <div class="form-grid">
+              <label>
+                <span>Height <small>(cm)</small></span>
+                <input type="number" id="riderHeight" step="1" min="150" max="210" />
+              </label>
+              <label>
+                <span>Leg Length <small>(cm)</small></span>
+                <input type="number" id="riderLegLength" step="1" min="65" max="105" />
+              </label>
+              <label>
+                <span>Arm Length <small>(cm)</small></span>
+                <input type="number" id="riderArmLength" step="1" min="50" max="85" />
+              </label>
+            </div>
+          </details>
+
+          <button id="resetBtn" class="reset-btn outline">↺ Reset to Defaults</button>
+        </div>
+      </div>
+
+      <!-- Comparison Table -->
+      <section class="fit-table-section">
+        <h3>Fit Comparison</h3>
+        <p class="table-note">Actual bike geometry vs. recommended values based on rider measurements</p>
+        <table class="fit-table" role="grid">
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Actual</th>
+              <th>Recommended</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="fitTableBody">
+            <!-- Populated by app.js -->
+          </tbody>
+        </table>
+      </section>
+    </main>
+
+    <!-- Scripts (classic, no modules for file:// compatibility) -->
+    <script src="js/defaults.js"></script>
+    <script src="js/bikeGeometry.js"></script>
+    <script src="js/fittingEngine.js"></script>
+    <script src="js/riderGeometry.js"></script>
+    <script src="js/renderer.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
