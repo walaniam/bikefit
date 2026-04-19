@@ -21,19 +21,26 @@
     var seatHeight = Math.round(legLength * 8.7);
 
     // Recommended reach range (mm)
-    // Base formula calibrated so avg man (178/83/65) → ~475mm center
-    var reachCenter = Math.round(torso * 4.3 + armLength * 1.2);
+    // Calibrated via linear regression on Giant Trance 29 (2024) sizing data.
+    // Height-based prediction plus individual proportion adjustments.
+    var baseReach = height * 3.33 - 128;
+    var avgTorso = height * 0.534;
+    var avgArm = height * 0.365;
+    var reachCenter = Math.round(
+      baseReach + (torso - avgTorso) * 4.0 + (armLength - avgArm) * 2.0
+    );
     var reachRange = {
       min: reachCenter - 15,
       max: reachCenter + 15
     };
 
     // Recommended stack range (mm)
-    // Base formula calibrated so avg man → ~625mm center
-    // Taller riders and those with longer legs need more stack
+    // Calibrated via linear regression on Giant Trance 29 (2024) sizing data.
+    // Stack increases slowly with height (~1.08 mm per cm of rider height).
     var legProportion = legLength / height;
+    var baseStack = height * 1.08 + 423;
     var stackCenter = Math.round(
-      height * 3.45 + (legProportion - 0.466) * height * 1.5
+      baseStack + (legProportion - 0.466) * height * 0.5
     );
     var stackRange = {
       min: stackCenter - 15,
