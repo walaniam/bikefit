@@ -22,12 +22,10 @@ RESOURCE_GROUP="${RESOURCE_GROUP:-bikefit-rg}"
 LOCATION="${LOCATION:-westeurope}"
 
 # Storage account name must be globally unique and 3–24 lowercase alphanumeric.
-# Default: "bikefit" + 8-char hex derived from the resource group name so that
+# Default: "bikefit" + 8-char hex digest of the resource group name so that
 # repeated runs with the same RESOURCE_GROUP reuse the same storage account.
 if [ -z "${STORAGE_ACCOUNT:-}" ]; then
-  _suffix=$(echo -n "${RESOURCE_GROUP}" | tr -dc 'a-z0-9' | cut -c1-8)
-  # Pad with zeros if the cleaned name is shorter than 8 chars
-  _suffix=$(printf '%-8s' "$_suffix" | tr ' ' '0')
+  _suffix=$(echo -n "${RESOURCE_GROUP}" | md5sum | cut -c1-8)
   STORAGE_ACCOUNT="bikefit${_suffix}"
 fi
 
@@ -99,30 +97,23 @@ success "Static website hosting enabled."
 # ── Upload Site Files ─────────────────────────────────────────────────────────
 
 info "Uploading site files to \$web container..."
-az storage blob upload-batch \
-  --account-name "${STORAGE_ACCOUNT}" \
-  --source "${SCRIPT_DIR}" \
-  --destination "\$web" \
-  --pattern "index.html" \
-  --overwrite \
-  --auth-mode login \
-  --output none
 
-az storage blob upload-batch \
-  --account-name "${STORAGE_ACCOUNT}" \
-  --source "${SCRIPT_DIR}/css" \
-  --destination "\$web/css" \
-  --overwrite \
-  --auth-mode login \
-  --output none
+_upload() {
+  # Usage: _upload <source-dir> <destination> [extra az args...]
+  local src="$1" dest="$2"; shift 2
+  az storage blob upload-batch \
+    --account-name "${STORAGE_ACCOUNT}" \
+    --source "${src}" \
+    --destination "${dest}" \
+    --overwrite \
+    --auth-mode login \
+    --output none \
+    "$@"
+}
 
-az storage blob upload-batch \
-  --account-name "${STORAGE_ACCOUNT}" \
-  --source "${SCRIPT_DIR}/js" \
-  --destination "\$web/js" \
-  --overwrite \
-  --auth-mode login \
-  --output none
+_upload "${SCRIPT_DIR}"      "\$web" --pattern "index.html"
+_upload "${SCRIPT_DIR}/css"  "\$web/css"
+_upload "${SCRIPT_DIR}/js"   "\$web/js"
 
 success "Site files uploaded."
 
