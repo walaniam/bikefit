@@ -90,7 +90,7 @@ az storage blob service-properties update \
   --static-website \
   --index-document index.html \
   --404-document index.html \
-  --auth-mode login \
+  --auth-mode key \
   --output none
 success "Static website hosting enabled."
 
@@ -106,7 +106,7 @@ _upload() {
     --source "${src}" \
     --destination "${dest}" \
     --overwrite \
-    --auth-mode login \
+    --auth-mode key \
     --output none \
     "$@"
 }
